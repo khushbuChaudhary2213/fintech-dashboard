@@ -127,6 +127,7 @@ function Transactions({ userRole, transactions, setTransactions, showless }) {
                 {selectedIds.length > 0 && (
                   <>
                     <button
+                      style={{ cursor: "pointer" }}
                       id="selectAllTransactions"
                       onClick={(e) => handleSelectAll(e)}
                     >
@@ -136,6 +137,7 @@ function Transactions({ userRole, transactions, setTransactions, showless }) {
                     </button>
 
                     <button
+                      style={{ cursor: "pointer" }}
                       onClick={
                         selectedIds.length === transactions.length
                           ? handleDeleteAll
@@ -165,6 +167,7 @@ function Transactions({ userRole, transactions, setTransactions, showless }) {
               <div className="txn-left">
                 {userRole === "Admin" && (
                   <input
+                    style={{ cursor: "pointer", width: "16px", height: "16px" }}
                     type="checkbox"
                     checked={selectedIds.includes(el.id)}
                     onChange={() => toggleSelection(el.id)}
@@ -177,7 +180,7 @@ function Transactions({ userRole, transactions, setTransactions, showless }) {
                 </div>
                 <div>
                   <p className="txn-title">{el.title}</p>
-                  <span className="txn-sub">{el.type}</span>
+                  <span className="txn-sub">{el.category}</span>
                 </div>
               </div>
 

@@ -20,13 +20,22 @@ function App() {
     return parsed && parsed.length > 0 ? JSON.parse(saved) : transactionsData;
   });
 
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(() => {
+    const savedMode = localStorage.getItem("isDark");
+    return savedMode ? JSON.parse(savedMode) : false;
+  });
 
   useEffect(() => {
     localStorage.setItem("transactions", JSON.stringify(transactions));
     localStorage.setItem("activePage", activePage);
     localStorage.setItem("userRole", userRole);
-  }, [transactions, activePage, userRole]);
+    localStorage.setItem("isDark", JSON.stringify(isDark));
+    if (isDark) {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+  }, [transactions, activePage, userRole, isDark]);
 
   const toggleDarkMode = () => {
     setIsDark(!isDark);
