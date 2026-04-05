@@ -1,0 +1,106 @@
+.transactions-page {
+  background: white;
+  padding: 25px;
+  border-radius: 20px;
+  flex: 1;
+  height: fit-content;
+}
+
+/* Header */
+.transactions-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.transactions-header h3 {
+  font-size: 22px;
+  margin-right: auto;
+}
+
+.transactions-header select {
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Row Card */
+.txn-row {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 1fr 1fr;
+  align-items: center;
+  background: #eef1f7;
+  padding: 15px 20px;
+  border-radius: 15px;
+  margin-bottom: 15px;
+}
+
+/* Left Section */
+.txn-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.txn-icon {
+  width: 40px;
+  height: 40px;
+  background: #000;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.txn-title {
+  font-weight: 600;
+}
+
+.txn-sub {
+  font-size: 12px;
+  color: gray;
+}
+
+/* Date */
+.txn-date p {
+  font-weight: 500;
+}
+
+.txn-date span {
+  font-size: 12px;
+  color: gray;
+}
+
+/* Amount */
+.txn-amount {
+  font-weight: 600;
+}
+
+/* Status */
+.txn-status {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  text-align: center;
+  width: fit-content;
+}
+
+/* Status Colors */
+.completed {
+  background: #d4f8e8;
+  color: #1aa36f;
+}
+
+.pending {
+  background: #ffe4e4;
+  color: #ff6b6b;
+}
+
+.declined {
+  background: #ffe4e4;
+  color: #ff4d4d;
+}
