@@ -1,3 +1,4 @@
+/* Laptop & Smaller Desktop (1024px and down) */
 @media (max-width: 1390px) {
   .left-panel {
     width: 400px;
@@ -8,35 +9,33 @@
   }
 }
 
-/* Tablet & Smaller Desktop (1024px and down) */
+/* Tablet & Smaller Laptop (1024px and down) */
 @media (max-width: 1024px) {
   .left-panel {
     width: auto;
   }
   .content {
-    flex-direction: column; /* Stack Chart and Insights vertically */
+    flex-direction: column;
   }
 
   .balance-chart {
-    width: 100%; /* Make chart container full width */
+    width: 100%;
   }
 
   .main {
-    overflow-y: auto; /* Allow scrolling in the main area */
+    overflow-y: auto;
   }
 }
-
-/* --- Responsiveness Additions --- */
 
 /* Tablet & Smaller Desktop (1024px and down) */
 @media (max-width: 1024px) {
   .content {
-    flex-direction: column; /* Stack Chart and Insights vertically */
+    flex-direction: column;
     padding: 20px;
   }
 
   .balance-chart {
-    width: 100% !important; /* Force chart to container width */
+    width: 100% !important;
     height: auto;
   }
 
@@ -53,7 +52,6 @@
     overflow: visible;
   }
 
-  /* Header Fix: Prevent circles from squishing */
   .header {
     display: flex;
   }
@@ -85,36 +83,11 @@
     display: none;
   }
 
-  /* Transactions Box Fix */
   .transactions-page {
     padding: 15px;
     width: 100%;
     overflow-x: hidden;
   }
-
-  /* .txn-date,
-  .txn-status,
-  .txn-sub {
-    display: none; /* Hide non-essential info on mobile */
-}
-*/ .transactions-header {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  align-items: center;
-}
-
-.control-group {
-  margin-right: 8px;
-}
-
-#sortTransactions,
-#filterTransactions,
-#selectAllTransactions,
-#deleteAllTransactions {
-  margin: 2px;
-  width: 100%;
-  font-size: 12px;
 }
 
 @media (max-width: 560px) {

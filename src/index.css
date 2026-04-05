@@ -60,14 +60,6 @@
   color: black;
 }
 
-.logo {
-  padding: 12px;
-  background-color: #f1f5fb;
-  font-size: 28px;
-  border-radius: 35%;
-  color: #0f172a;
-}
-
 .menu {
   width: 160px;
   display: flex;
@@ -133,22 +125,16 @@
   bottom: 32px;
 }
 
-/* .logout-btn {
-  position: absolute;
-  bottom: 35px;
-  margin-top: auto;
-} */
-
-/* Main */
-.main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  max-width: 1400px;
+/*/////////////////////*/
+/* Header */
+.logo {
+  padding: 12px;
+  background-color: #f1f5fb;
+  font-size: 28px;
+  border-radius: 35%;
+  color: #0f172a;
 }
 
-/* Header */
 .header {
   display: flex;
   justify-content: space-between;
@@ -178,7 +164,15 @@
   border: none;
 }
 
-/* Content */
+/* Main Dashboard Page*/
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  max-width: 1400px;
+}
+
 .content {
   display: flex;
   gap: 20px;
@@ -188,40 +182,6 @@
   overflow-y: auto;
 }
 
-/* Transactions */
-
-#sortTransactions,
-#filterTransactions,
-#selectAllTransactions,
-#deleteAllTransactions {
-  margin: 6px;
-  background-color: #d9e1fd;
-  padding: 6px;
-  border-radius: 12px;
-  border: none;
-}
-
-#deleteAllTransactions {
-  background-color: red;
-}
-
-#filterTransactions {
-  margin-right: 8px;
-}
-
-.controls {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 14px;
-}
-
-.txn {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 0;
-  border-bottom: 1px solid #eee;
-}
 .left-panel {
   flex: 2;
 }
@@ -262,13 +222,6 @@
   font-weight: 100;
 }
 
-.rate {
-  padding: 8px;
-  width: fit-content;
-  background-color: rgba(205, 205, 205, 0.634);
-  border-radius: 20px;
-}
-
 .box input[type="range"] {
   -webkit-appearance: none;
   background: rgb(193, 193, 193);
@@ -304,22 +257,7 @@
   color: var(--text-main);
 }
 
-.btn {
-  background-color: #2d5bff;
-  color: white;
-  padding: 8px;
-  border-radius: 12px;
-  border: none;
-  cursor: pointer;
-  transition: all ease-in-out 0.4s;
-}
-
-.btn:hover {
-  background-color: #5378ff;
-  scale: 1.08;
-}
-
-/* Background overlay */
+/* Add Transaction Modal */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -376,17 +314,6 @@
   background: #eee;
 }
 
-.no-data {
-  text-align: center;
-  padding: 50px 20px;
-  color: gray;
-}
-
-.no-data h3 {
-  margin-bottom: 10px;
-  color: #333;
-}
-
 .add-btn {
   margin-top: 15px;
   padding: 10px 15px;
@@ -395,11 +322,6 @@
   color: white;
   border-radius: 8px;
   cursor: pointer;
-}
-
-.txn-action {
-  display: flex;
-  justify-content: center;
 }
 
 .delete-btn {
@@ -416,6 +338,19 @@
   background: #e60000;
 }
 
+.no-data {
+  text-align: center;
+  padding: 50px 20px;
+  color: gray;
+}
+
+.no-data h3 {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* Transactions */
+
 .transactions-page {
   background: var(--bg-box);
   padding: 25px;
@@ -425,7 +360,6 @@
   color: black;
 }
 
-/* Header */
 .transactions-header {
   display: flex;
   justify-content: space-between;
@@ -446,7 +380,13 @@
   cursor: pointer;
 }
 
-/* Row Card */
+.txn {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
 .txn-row {
   display: grid;
   gap: 10px;
@@ -463,6 +403,21 @@
 }
 .user-cols {
   grid-template-columns: 2fr 1.5fr 1fr 1fr;
+}
+
+.btn {
+  background-color: #2d5bff;
+  color: white;
+  padding: 8px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  transition: all ease-in-out 0.4s;
+}
+
+.btn:hover {
+  background-color: #5378ff;
+  scale: 1.08;
 }
 
 /* Left Section */
@@ -493,7 +448,6 @@
   color: gray;
 }
 
-/* Date */
 .txn-date p {
   font-weight: 500;
 }
@@ -503,12 +457,10 @@
   color: gray;
 }
 
-/* Amount */
 .txn-amount {
   font-weight: 600;
 }
 
-/* Status */
 .txn-status {
   padding: 5px 12px;
   border-radius: 20px;
@@ -517,18 +469,33 @@
   width: fit-content;
 }
 
-/* Status Colors */
-.completed {
-  background: #d4f8e8;
-  color: #1aa36f;
+.txn-action {
+  display: flex;
+  justify-content: center;
 }
 
-.pending {
-  background: #ffe4e4;
-  color: #ff6b6b;
+#sortTransactions,
+#filterTransactions,
+#selectAllTransactions,
+#deleteAllTransactions {
+  margin: 6px;
+  background-color: #d9e1fd;
+  padding: 6px;
+  border-radius: 12px;
+  border: none;
 }
 
-.declined {
-  background: #ffe4e4;
-  color: #ff4d4d;
+#deleteAllTransactions {
+  background-color: red;
+}
+
+#filterTransactions {
+  margin-right: 8px;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
 }
