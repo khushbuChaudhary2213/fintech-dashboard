@@ -30,7 +30,6 @@ function App() {
 
   const toggleDarkMode = () => {
     setIsDark(!isDark);
-    // Add/Remove class from the body
     document.body.classList.toggle("dark");
   };
 
@@ -38,7 +37,6 @@ function App() {
     <div className="container">
       <Sidebar activePage={activePage} setActivePage={setActivePage} />
 
-      {/* Main Content */}
       <div className="main">
         <div className="header">
           <div className="logo material-symbols-outlined">finance_mode</div>
@@ -57,8 +55,7 @@ function App() {
             </div>
             <p>Explore Finance</p>
           </div>
-          <div className="search"></div>
-          <div className="msg"></div>
+          <div className="search">🔍</div>
           <button className="dark-mode" onClick={toggleDarkMode}>
             {isDark ? "☀️" : "🌙"}
           </button>

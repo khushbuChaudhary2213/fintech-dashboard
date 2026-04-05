@@ -1,0 +1,188 @@
+@media (max-width: 1390px) {
+  .left-panel {
+    width: 400px;
+  }
+
+  .balance-chart {
+    width: auto;
+  }
+}
+
+/* Tablet & Smaller Desktop (1024px and down) */
+@media (max-width: 1024px) {
+  .left-panel {
+    width: auto;
+  }
+  .content {
+    flex-direction: column; /* Stack Chart and Insights vertically */
+  }
+
+  .balance-chart {
+    width: 100%; /* Make chart container full width */
+  }
+
+  .main {
+    overflow-y: auto; /* Allow scrolling in the main area */
+  }
+}
+
+/* --- Responsiveness Additions --- */
+
+/* Tablet & Smaller Desktop (1024px and down) */
+@media (max-width: 1024px) {
+  .content {
+    flex-direction: column; /* Stack Chart and Insights vertically */
+    padding: 20px;
+  }
+
+  .balance-chart {
+    width: 100% !important; /* Force chart to container width */
+    height: auto;
+  }
+
+  .main {
+    overflow-y: auto;
+  }
+}
+
+/* Mobile Devices (768px and down) */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    height: auto;
+    overflow: visible;
+  }
+
+  /* Header Fix: Prevent circles from squishing */
+  .header {
+    display: flex;
+  }
+
+  .username {
+    display: flex;
+    flex-direction: column;
+    margin-right: 0;
+    width: 100%;
+  }
+
+  .sidebar {
+    margin: 10px;
+    width: auto;
+    border-radius: 15px;
+  }
+
+  .menu {
+    width: 100%;
+    flex-direction: row;
+    height: auto;
+    justify-content: space-around;
+    padding: 10px 0;
+  }
+
+  .menu-item-text,
+  .logo,
+  .logout-menu-item {
+    display: none;
+  }
+
+  /* Transactions Box Fix */
+  .transactions-page {
+    padding: 15px;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* .txn-date,
+  .txn-status,
+  .txn-sub {
+    display: none; /* Hide non-essential info on mobile */
+}
+*/ .transactions-header {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+.control-group {
+  margin-right: 8px;
+}
+
+#sortTransactions,
+#filterTransactions,
+#selectAllTransactions,
+#deleteAllTransactions {
+  margin: 2px;
+  width: 100%;
+  font-size: 12px;
+}
+
+@media (max-width: 560px) {
+  html {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 512px) {
+  .transactions-header {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .transactions-header h3 {
+    grid-column: 1/-1;
+  }
+
+  .controls {
+    grid-column: 1/3;
+  }
+
+  .txn-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 390px) {
+  .main {
+    margin: 0;
+    padding: 2px;
+  }
+  .header {
+    padding: 4px;
+  }
+  .txn-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .txn-action {
+    grid-row: 2;
+    grid-column: 2;
+  }
+  .search,
+  .dark-mode {
+    width: 30px;
+    height: 30px;
+  }
+  .menu-item {
+    flex-direction: column;
+  }
+
+  .menu-item.active {
+    background-color: #f1f5fb;
+  }
+
+  .box.income {
+    width: 0.2px;
+  }
+
+  .price {
+    font-size: 24px;
+  }
+  .box.expense {
+    width: 0.2px;
+  }
+}

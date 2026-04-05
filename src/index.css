@@ -166,40 +166,16 @@
 .dark-mode,
 .msg,
 .search {
+  flex-shrink: 0; /* Important: Prevents circles from becoming ovals */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 40px;
   height: 40px;
   background: #ddd;
   border-radius: 50%;
   cursor: pointer;
   border: none;
-}
-
-/* Cards */
-.cards-section {
-  display: flex;
-  gap: 20px;
-  margin-bottom: 20px;
-}
-
-.card {
-  flex: 1;
-  height: 120px;
-  border-radius: 20px;
-  color: white;
-  padding: 20px;
-  font-weight: bold;
-}
-
-.purple {
-  background: linear-gradient(135deg, #7b61ff, #a88bff);
-}
-
-.blue {
-  background: linear-gradient(135deg, #4facfe, #00f2fe);
-}
-
-.green {
-  background: linear-gradient(135deg, #43e97b, #38f9d7);
 }
 
 /* Content */
@@ -473,6 +449,7 @@
 /* Row Card */
 .txn-row {
   display: grid;
+  gap: 10px;
 
   align-items: center;
   background: #eef1f7;
