@@ -1,18 +1,18 @@
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 
 const COLORS = [
-  "#0923fd", // blue
-  "#00c49f", // teal
-  "#ffbb28", // yellow
-  "#ff4d4d", // red
-  "#845ef7", // purple
-  "#20c997", // mint
-  "#f06595", // pink
-  "#ffa94d", // orange
-  "#339af0", // sky blue
-  "#51cf66", // green
-  "#fcc419", // gold
-  "#748ffc", // soft indigo
+  "#0923fd",
+  "#00c49f",
+  "#ffbb28",
+  "#ff4d4d",
+  "#845ef7",
+  "#136049",
+  "#f06595",
+  "#ffa94d",
+  "#339af0",
+  "#51cf66",
+  "#fcc419",
+  "#748ffc",
 ];
 
 const CategoryChart = ({ transactions }) => {

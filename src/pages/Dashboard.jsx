@@ -3,7 +3,6 @@ import CategoryChart from "../components/CategoryChart";
 import InsightsBox from "../components/InsightBox";
 import Transactions from "../components/Transactions";
 import EmptyState from "../components/EmptyState";
-// import "../index.css";
 
 function Dashboard({ userRole, transactions, setTransactions }) {
   const income = transactions
@@ -31,7 +30,6 @@ function Dashboard({ userRole, transactions, setTransactions }) {
   return (
     <div className="content">
       <div className="left-panel">
-        {/* <CardSlider /> */}
         <BalanceChart transactions={transactions} />
 
         <Transactions
@@ -47,12 +45,10 @@ function Dashboard({ userRole, transactions, setTransactions }) {
           <div className="box income" style={{ flex: "1" }}>
             <h4>Income</h4>
             <p className="price">${income}</p>
-            {/* <span className="rate">+2.5% ⬆</span> */}
           </div>
           <div className="box expense" style={{ flex: "1" }}>
             <h4>Expense</h4>
             <p className="price">${expenses}</p>
-            {/* <span className="rate">-2.5% ⬇</span> */}
           </div>
         </div>
 

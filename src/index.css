@@ -1,9 +1,37 @@
 /* Reset */
+
+:root {
+  /* Light Mode Colors */
+  --bg-main: white;
+  --bg-sidebar: #f1f5fb;
+  --bg-content: #f1f5fb;
+  --bg-box: white;
+  --text-main: #000000;
+  --text-sub: gray;
+  --txn-row: #eef1f7;
+  --border: #eee;
+  --bg-income: #43e988;
+  --bg-expense: #ff6363;
+}
+
+/* Dark Mode Overrides */
+.dark {
+  --bg-main: #0f172a; /* Deep dark blue/black */
+  --bg-sidebar: #1e293b; /* Slightly lighter dark */
+  --bg-content: #0f172a;
+  --bg-box: #1e293b;
+  --text-main: #f8fafc; /* Off-white */
+  --text-sub: #94a3b8; /* Muted blue-gray */
+  --txn-row: #334155; /* Dark row background */
+  --border: #334155;
+  --bg-income: #206c40;
+  --bg-expense: #853131;
+}
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Roboto Mono";
+  font-family: "Inter", sans-serif;
 }
 
 .material-symbols-outlined {
@@ -17,56 +45,99 @@
 /* Container */
 .container {
   display: flex;
-  background: white;
+  background: var(--bg-main);
   height: 100vh;
   overflow: hidden;
+  color: var(--text-main);
 }
 
 /* Sidebar */
 .sidebar {
-  width: 80px;
   background: #f1f5fb;
   border-radius: 20px;
   margin: 20px;
   padding: 20px 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  color: black;
 }
 
 .logo {
   padding: 12px;
-  background-color: white;
+  background-color: #f1f5fb;
   font-size: 28px;
-  margin-bottom: 40px;
   border-radius: 35%;
+  color: #0f172a;
+}
+
+.menu {
+  width: 160px;
+  display: flex;
+  flex-direction: column;
+  margin-left: 4px;
+  justify-content: flex-start;
+  gap: 20px;
+  height: 100vh;
+  transition: width 0.3s ease;
+}
+
+.hidden {
+  width: 55px;
+  align-items: center;
+}
+
+.menu .menu-bar-btn {
+  border: none;
 }
 
 .menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition:
+    background-color 0.4s ease,
+    transform 0.3s ease;
+}
+
+.menu-item-logo {
   width: 40px;
   height: 40px;
   border-radius: 10px;
   background: white;
-  margin: 10px 10px;
   padding: 8px;
-  cursor: pointer;
-  transition: all ease-in-out 0.4s;
-}
-.menu-item.active {
-  background: #2d5bff;
+  transition:
+    background-color 0.3s ease,
+    scale 0.2s ease;
+  color: #0f172a;
 }
 
-.menu-item:hover {
+.menu-item.active {
+  background-color: #2d5bff;
+}
+
+.active .menu-item-logo {
+  background-color: #2d5bff;
+}
+
+.menu-item-logo:hover {
   scale: 1.2;
 }
 
-.logout-btn {
-  position: relative;
-  top: 60%;
-  background-color: white;
-  border-radius: 18px;
-  padding: 12px;
+.menu-item-text {
+  font-size: 18px;
+  margin-bottom: 8px;
 }
+
+.logout-menu-item {
+  position: absolute;
+  bottom: 32px;
+}
+
+/* .logout-btn {
+  position: absolute;
+  bottom: 35px;
+  margin-top: auto;
+} */
 
 /* Main */
 .main {
@@ -74,13 +145,14 @@
   display: flex;
   flex-direction: column;
   padding: 20px;
+  max-width: 1400px;
 }
 
 /* Header */
 .header {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   gap: 20px;
 }
 
@@ -91,13 +163,15 @@
 .username {
   margin-right: auto;
 }
-.profile,
+.dark-mode,
 .msg,
 .search {
   width: 40px;
   height: 40px;
   background: #ddd;
   border-radius: 50%;
+  cursor: pointer;
+  border: none;
 }
 
 /* Cards */
@@ -139,16 +213,33 @@
 }
 
 /* Transactions */
-.transactions {
-  flex: 2;
-  background: white;
-  padding: 20px;
-  border-radius: 20px;
+
+#sortTransactions,
+#filterTransactions,
+#selectAllTransactions,
+#deleteAllTransactions {
+  margin: 6px;
+  background-color: #d9e1fd;
+  padding: 6px;
+  border-radius: 12px;
+  border: none;
 }
 
-.transactions h3 {
-  margin-bottom: 20px;
+#deleteAllTransactions {
+  background-color: red;
 }
+
+#filterTransactions {
+  margin-right: 8px;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+
 .txn {
   display: flex;
   justify-content: space-between;
@@ -178,7 +269,8 @@
   transition: all ease-in-out 0.5s;
 }
 
-.box:hover {
+.income:hover,
+.expense:hover {
   scale: 1.05;
   background: #0921fee4;
   color: white;
@@ -209,11 +301,11 @@
 }
 
 .income {
-  background-color: #43e988;
+  background-color: var(--bg-income);
 }
 
 .expense {
-  background-color: rgb(255, 99, 99);
+  background-color: var(--bg-expense);
 }
 
 .balance-chart {
@@ -221,17 +313,19 @@
 }
 
 .chart {
-  background: #fff;
+  background: var(--bg-box) !important;
+  color: var(--text-main);
   border-radius: 20px;
   padding: 15px;
   height: auto;
 }
 
 .insights {
-  background: #fff;
+  background: var(--bg-box) !important;
   border-radius: 20px;
   padding: 15px;
   line-height: 1.8;
+  color: var(--text-main);
 }
 
 .btn {
@@ -344,4 +438,120 @@
 
 .delete-btn:hover {
   background: #e60000;
+}
+
+.transactions-page {
+  background: var(--bg-box);
+  padding: 25px;
+  border-radius: 20px;
+  flex: 1;
+  height: fit-content;
+  color: black;
+}
+
+/* Header */
+.transactions-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  color: var(--text-main);
+}
+
+.transactions-header h3 {
+  font-size: 22px;
+  margin-right: auto;
+}
+
+.transactions-header select {
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Row Card */
+.txn-row {
+  display: grid;
+
+  align-items: center;
+  background: #eef1f7;
+  padding: 15px 20px;
+  border-radius: 15px;
+  margin-bottom: 15px;
+}
+
+.admin-cols {
+  grid-template-columns: 2fr 1.5fr 1fr 1fr 1fr;
+}
+.user-cols {
+  grid-template-columns: 2fr 1.5fr 1fr 1fr;
+}
+
+/* Left Section */
+.txn-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.txn-icon {
+  width: 40px;
+  height: 40px;
+  background: #aeaeaec4;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.txn-title {
+  font-weight: 500;
+}
+
+.txn-sub {
+  font-size: 12px;
+  color: gray;
+}
+
+/* Date */
+.txn-date p {
+  font-weight: 500;
+}
+
+.txn-date span {
+  font-size: 12px;
+  color: gray;
+}
+
+/* Amount */
+.txn-amount {
+  font-weight: 600;
+}
+
+/* Status */
+.txn-status {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  text-align: center;
+  width: fit-content;
+}
+
+/* Status Colors */
+.completed {
+  background: #d4f8e8;
+  color: #1aa36f;
+}
+
+.pending {
+  background: #ffe4e4;
+  color: #ff6b6b;
+}
+
+.declined {
+  background: #ffe4e4;
+  color: #ff4d4d;
 }

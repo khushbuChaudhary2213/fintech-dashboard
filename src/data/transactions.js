@@ -1,4 +1,5 @@
 const transactions = [
+  // --- APRIL 2026 (Current Month) ---
   {
     id: 1,
     title: "Salary",
@@ -23,12 +24,10 @@ const transactions = [
     category: "Shopping",
     date: "2026-04-03",
   },
-
-  // 🔥 More data
   {
     id: 4,
     title: "Freelance Project",
-    amount: 8000,
+    amount: 8500,
     type: "income",
     category: "Freelance",
     date: "2026-04-04",
@@ -75,7 +74,7 @@ const transactions = [
   },
   {
     id: 10,
-    title: "Bonus",
+    title: "Performance Bonus",
     amount: 5000,
     type: "income",
     category: "Bonus",
@@ -83,43 +82,77 @@ const transactions = [
   },
   {
     id: 11,
-    title: "Mobile Recharge",
-    amount: 299,
-    type: "expense",
-    category: "Bills",
-    date: "2026-04-11",
-  },
-  {
-    id: 12,
-    title: "Dinner Out",
+    title: "Stock Dividends",
     amount: 1200,
-    type: "expense",
-    category: "Food",
-    date: "2026-04-12",
-  },
-  {
-    id: 13,
-    title: "Online Course",
-    amount: 2000,
-    type: "expense",
-    category: "Education",
-    date: "2026-04-13",
-  },
-  {
-    id: 14,
-    title: "Stock Dividend",
-    amount: 1500,
     type: "income",
     category: "Investment",
-    date: "2026-04-14",
+    date: "2026-04-12",
+  },
+
+  // --- MARCH 2026 (Previous Month) ---
+  {
+    id: 101,
+    title: "Salary",
+    amount: 25000,
+    type: "income",
+    category: "Salary",
+    date: "2026-03-01",
   },
   {
-    id: 15,
-    title: "Petrol",
-    amount: 1800,
+    id: 102,
+    title: "Rent Payment",
+    amount: 8000,
     type: "expense",
-    category: "Transport",
-    date: "2026-04-15",
+    category: "Housing",
+    date: "2026-03-02",
+  },
+  {
+    id: 103,
+    title: "Groceries",
+    amount: 4500,
+    type: "expense",
+    category: "Food",
+    date: "2026-03-05",
+  },
+  {
+    id: 104,
+    title: "Internet Bill",
+    amount: 1500,
+    type: "expense",
+    category: "Bills",
+    date: "2026-03-10",
+  },
+  {
+    id: 105,
+    title: "Dining Out",
+    amount: 2500,
+    type: "expense",
+    category: "Food",
+    date: "2026-03-15",
+  },
+  {
+    id: 106,
+    title: "Insurance Premium",
+    amount: 1200,
+    type: "expense",
+    category: "Health",
+    date: "2026-03-20",
+  },
+  {
+    id: 107,
+    title: "Tech Gadget Shop",
+    amount: 5000,
+    type: "expense",
+    category: "Shopping",
+    date: "2026-03-25",
+  },
+  {
+    id: 108,
+    title: "Consulting Fee",
+    amount: 4000,
+    type: "income",
+    category: "Freelance",
+    date: "2026-03-28",
   },
 ];
 

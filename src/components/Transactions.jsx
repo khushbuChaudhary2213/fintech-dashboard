@@ -2,8 +2,23 @@ import { useState } from "react";
 import AddTransactionModal from "./AddTransactionModal";
 import EmptyState from "./EmptyState";
 
+const icons = {
+  food: "food_bank",
+  salary: "paid",
+  shopping: "shopping_bag",
+  transport: "transportation",
+  health: "health_and_safety",
+  bills: "list_alt",
+  education: "book_2",
+  bonus: "attach_money",
+  investment: "universal_currency_alt",
+};
+
 function Transactions({ userRole, transactions, setTransactions, showless }) {
   const [showModal, setShowModal] = useState(false);
+  const [sortBy, setSortBy] = useState("date");
+  const [filter, setFilter] = useState("all");
+  const [selectedIds, setSelectedIds] = useState([]);
 
   function handleAdd(newtxn) {
     setTransactions([...transactions, newtxn]);
@@ -13,11 +28,51 @@ function Transactions({ userRole, transactions, setTransactions, showless }) {
     setTransactions((prev) => prev.filter((t) => t.id !== id));
   }
 
-  const sortedTransactions = [...transactions].sort((a, b) => {
-    const dateA = new Date(a.date);
-    const dateB = new Date(b.date);
+  const toggleSelection = (id) => {
+    setSelectedIds((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
+    );
+  };
 
-    return dateA - dateB;
+  const handleSelectAll = () => {
+    if (selectedIds.length === transactions.length) {
+      setSelectedIds([]);
+    } else {
+      const allIds = transactions.map((t) => t.id);
+      setSelectedIds(allIds);
+    }
+  };
+
+  function handleDeleteSelected() {
+    setTransactions((prev) =>
+      prev.filter((el) => !selectedIds.includes(el.id)),
+    );
+    setSelectedIds([]);
+  }
+
+  function handleDeleteAll() {
+    setTransactions([]);
+    setSelectedIds([]);
+  }
+
+  const filteredTransactions = [...transactions].filter((el) => {
+    if (filter === "all") return transactions;
+    if (filter === "income") return el.type === "income";
+    if (filter === "expense") return el.type === "expense";
+  });
+
+  const sortedTransactions = [...filteredTransactions].sort((a, b) => {
+    if (sortBy === "date") {
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+      return dateA - dateB;
+    }
+    if (sortBy === "alphabet") {
+      return a.title.localeCompare(b.title);
+    }
+    if (sortBy === "amount") {
+      return a.amount - b.amount;
+    }
   });
 
   const displayedTransactions = showless
@@ -26,7 +81,6 @@ function Transactions({ userRole, transactions, setTransactions, showless }) {
 
   return (
     <div className="transactions-page">
-      {/* MODAL */}
       {showModal && (
         <AddTransactionModal
           onClose={() => setShowModal(false)}
@@ -45,17 +99,82 @@ function Transactions({ userRole, transactions, setTransactions, showless }) {
           <div className="transactions-header">
             <h3>Transactions</h3>
 
+            <div className="controls">
+              <div className="control-group">
+                <label>Filter:</label>
+                <select
+                  id="filterTransactions"
+                  onChange={(e) => setFilter(e.target.value)}
+                >
+                  <option value="all">All</option>
+                  <option value="income">Income</option>
+                  <option value="expense">Expense</option>
+                </select>
+              </div>
+              <div className="control-group"></div>
+              <label>Sort By:</label>
+              <select
+                id="sortTransactions"
+                onChange={(e) => setSortBy(e.target.value)}
+              >
+                <option value="alphabet">Alphabet</option>
+                <option value="date">Date</option>
+                <option value="amount">Amount</option>
+              </select>
+            </div>
             {userRole === "Admin" && (
-              <button className="btn" onClick={() => setShowModal(true)}>
-                Add Transaction
-              </button>
+              <>
+                {selectedIds.length > 0 && (
+                  <>
+                    <button
+                      id="selectAllTransactions"
+                      onClick={(e) => handleSelectAll(e)}
+                    >
+                      {selectedIds.length === transactions.length
+                        ? "Deselect All"
+                        : "Select All"}
+                    </button>
+
+                    <button
+                      onClick={
+                        selectedIds.length === transactions.length
+                          ? handleDeleteAll
+                          : handleDeleteSelected
+                      }
+                      id="deleteAllTransactions"
+                    >
+                      {selectedIds.length === transactions.length
+                        ? "Delete All"
+                        : "Delete"}
+                    </button>
+                  </>
+                )}
+
+                <button className="btn" onClick={() => setShowModal(true)}>
+                  Add Transaction
+                </button>
+              </>
             )}
           </div>
 
           {displayedTransactions.map((el) => (
-            <div className="txn-row" key={el.id}>
+            <div
+              className={`txn-row ${userRole === "User" ? "user-cols" : "admin-cols"}`}
+              key={el.id}
+            >
               <div className="txn-left">
-                <div className="txn-icon">{el.icon}</div>
+                {userRole === "Admin" && (
+                  <input
+                    type="checkbox"
+                    checked={selectedIds.includes(el.id)}
+                    onChange={() => toggleSelection(el.id)}
+                  />
+                )}
+                <div className="txn-icon material-symbols-outlined ">
+                  {icons[el.category.toLowerCase()]
+                    ? icons[el.category.toLowerCase()]
+                    : el.title.charAt(0).toUpperCase()}
+                </div>
                 <div>
                   <p className="txn-title">{el.title}</p>
                   <span className="txn-sub">{el.type}</span>
@@ -69,7 +188,15 @@ function Transactions({ userRole, transactions, setTransactions, showless }) {
 
               <div className="txn-amount">${el.amount}</div>
 
-              {userRole === "Admin" ? (
+              <div
+                className={`txn-status ${
+                  el.type === "income" ? "income" : "expense"
+                }`}
+              >
+                {el.type === "income" ? "Income" : "Expense"}
+              </div>
+
+              {userRole === "Admin" && (
                 <div className="txn-action">
                   <button
                     className="delete-btn"
@@ -77,14 +204,6 @@ function Transactions({ userRole, transactions, setTransactions, showless }) {
                   >
                     Delete
                   </button>
-                </div>
-              ) : (
-                <div
-                  className={`txn-status ${
-                    el.type === "income" ? "income" : "expense"
-                  }`}
-                >
-                  {el.type === "income" ? "Income" : "Expense"}
                 </div>
               )}
             </div>

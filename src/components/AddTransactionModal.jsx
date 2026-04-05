@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "../index.css";
 
 const AddTransactionModal = ({ onClose, onAdd }) => {
   const [form, setForm] = useState({

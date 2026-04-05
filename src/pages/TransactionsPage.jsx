@@ -1,4 +1,3 @@
-import "./transaction.css";
 import Transactions from "../components/Transactions";
 
 function TransactionsPage({ userRole, transactions, setTransactions }) {

@@ -1,13 +1,18 @@
 import Sidebar from "./components/Sidebar";
 import Dashboard from "./pages/Dashboard";
-import "./index.css";
 import TransactionsPage from "./pages/TransactionsPage";
 import { useEffect, useState } from "react";
 import transactionsData from "./data/transactions";
 
 function App() {
-  const [activePage, setActivePage] = useState("dashboard");
-  const [userRole, setUserRole] = useState("User");
+  const [activePage, setActivePage] = useState(() => {
+    const savedPage = localStorage.getItem("activePage");
+    return savedPage ? savedPage : "dashboard";
+  });
+  const [userRole, setUserRole] = useState(() => {
+    const savedUser = localStorage.getItem("userRole");
+    return savedUser ? savedUser : "User";
+  });
   const [transactions, setTransactions] = useState(() => {
     const saved = localStorage.getItem("transactions");
     const parsed = saved ? JSON.parse(saved) : null;
@@ -15,9 +20,19 @@ function App() {
     return parsed && parsed.length > 0 ? JSON.parse(saved) : transactionsData;
   });
 
+  const [isDark, setIsDark] = useState(false);
+
   useEffect(() => {
     localStorage.setItem("transactions", JSON.stringify(transactions));
-  }, [transactions]);
+    localStorage.setItem("activePage", activePage);
+    localStorage.setItem("userRole", userRole);
+  }, [transactions, activePage, userRole]);
+
+  const toggleDarkMode = () => {
+    setIsDark(!isDark);
+    // Add/Remove class from the body
+    document.body.classList.toggle("dark");
+  };
 
   return (
     <div className="container">
@@ -26,18 +41,27 @@ function App() {
       {/* Main Content */}
       <div className="main">
         <div className="header">
+          <div className="logo material-symbols-outlined">finance_mode</div>
           <div className="username">
-            <select onChange={(e) => setUserRole(e.target.value)}>
-              Role:
-              <option value="User">User</option>
-              <option value="Admin">Admin</option>
-            </select>
-            <h2>Welcome {userRole} 👋</h2>
+            <div style={{ display: "flex", gap: "6px" }}>
+              <h2>Welcome</h2>
+              <h2>{userRole}</h2>
+              <select
+                onChange={(e) => setUserRole(e.target.value)}
+                style={{ marginLeft: "4px" }}
+              >
+                Role:
+                <option value="User">User</option>
+                <option value="Admin">Admin</option>
+              </select>
+            </div>
             <p>Explore Finance</p>
           </div>
           <div className="search"></div>
           <div className="msg"></div>
-          <div className="profile"></div>
+          <button className="dark-mode" onClick={toggleDarkMode}>
+            {isDark ? "☀️" : "🌙"}
+          </button>
         </div>
 
         {activePage === "dashboard" && (
