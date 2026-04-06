@@ -255,6 +255,7 @@
   font-size: 0.8rem;
   padding: 2px 4px;
   border-radius: 12px;
+  color: var(--text-main);
 }
 
 .income {
