@@ -1,24 +1,20 @@
 import { useState } from "react";
 import AddTransactionModal from "./AddTransactionModal";
 import EmptyState from "./EmptyState";
+import icons from "../utils/iconsTransaction";
 
-const icons = {
-  food: "food_bank",
-  salary: "paid",
-  shopping: "shopping_bag",
-  transport: "transportation",
-  health: "health_and_safety",
-  bills: "list_alt",
-  education: "book_2",
-  bonus: "attach_money",
-  investment: "universal_currency_alt",
-};
-
-function Transactions({ userRole, transactions, setTransactions, showless }) {
-  const [showModal, setShowModal] = useState(false);
+function Transactions({
+  userRole,
+  transactions,
+  setTransactions,
+  showless,
+  showModal,
+  setShowModal,
+}) {
   const [sortBy, setSortBy] = useState("date");
   const [filter, setFilter] = useState("all");
   const [selectedIds, setSelectedIds] = useState([]);
+  const [search, setSearch] = useState("");
 
   function handleAdd(newtxn) {
     setTransactions([...transactions, newtxn]);
@@ -55,7 +51,17 @@ function Transactions({ userRole, transactions, setTransactions, showless }) {
     setSelectedIds([]);
   }
 
+  function handleSearchChange(e) {
+    setSearch(e.target.value);
+  }
+
   const filteredTransactions = [...transactions].filter((el) => {
+    if (search != "") {
+      return (
+        el.title.toLowerCase().includes(search.toLowerCase()) ||
+        el.category.toLowerCase().includes(search.toLowerCase())
+      );
+    }
     if (filter === "all") return transactions;
     if (filter === "income") return el.type === "income";
     if (filter === "expense") return el.type === "expense";
@@ -75,18 +81,18 @@ function Transactions({ userRole, transactions, setTransactions, showless }) {
     }
   });
 
-  const displayedTransactions = showless
+  let displayedTransactions = showless
     ? sortedTransactions.slice(0, 5)
     : sortedTransactions;
 
   return (
     <div className="transactions-page">
-      {showModal && (
+      {/* {showModal && (
         <AddTransactionModal
           onClose={() => setShowModal(false)}
           onAdd={handleAdd}
         />
-      )}
+      )} */}
       {transactions.length === 0 ? (
         <EmptyState
           message="No transactions to display"
@@ -98,7 +104,13 @@ function Transactions({ userRole, transactions, setTransactions, showless }) {
         <>
           <div className="transactions-header">
             <h3>Transactions</h3>
-
+            <input
+              name="search-bar"
+              type="text"
+              value={search}
+              placeholder="Search By Title/Category"
+              onChange={handleSearchChange}
+            />
             <div className="controls">
               <div className="control-group">
                 <label>Filter:</label>
@@ -159,58 +171,66 @@ function Transactions({ userRole, transactions, setTransactions, showless }) {
             )}
           </div>
 
-          {displayedTransactions.map((el) => (
-            <div
-              className={`txn-row ${userRole === "User" ? "user-cols" : "admin-cols"}`}
-              key={el.id}
-            >
-              <div className="txn-left">
-                {userRole === "Admin" && (
-                  <input
-                    style={{ cursor: "pointer", width: "16px", height: "16px" }}
-                    type="checkbox"
-                    checked={selectedIds.includes(el.id)}
-                    onChange={() => toggleSelection(el.id)}
-                  />
-                )}
-                <div className="txn-icon material-symbols-outlined ">
-                  {icons[el.category.toLowerCase()]
-                    ? icons[el.category.toLowerCase()]
-                    : el.title.charAt(0).toUpperCase()}
-                </div>
-                <div>
-                  <p className="txn-title">{el.title}</p>
-                  <span className="txn-sub">{el.category}</span>
-                </div>
-              </div>
-
-              <div className="txn-date">
-                <p>{el.date}</p>
-                <span>{el.time}</span>
-              </div>
-
-              <div className="txn-amount">${el.amount}</div>
-
+          {displayedTransactions.length > 0 ? (
+            displayedTransactions.map((el) => (
               <div
-                className={`txn-status ${
-                  el.type === "income" ? "income" : "expense"
-                }`}
+                className={`txn-row ${userRole === "User" ? "user-cols" : "admin-cols"}`}
+                key={el.id}
               >
-                {el.type === "income" ? "Income" : "Expense"}
-              </div>
-
-              {userRole === "Admin" && (
-                <div className="txn-action">
-                  <button
-                    className="delete-btn"
-                    onClick={() => handleDelete(el.id)}
-                  >
-                    Delete
-                  </button>
+                <div className="txn-left">
+                  {userRole === "Admin" && (
+                    <input
+                      style={{
+                        cursor: "pointer",
+                        width: "16px",
+                        height: "16px",
+                      }}
+                      type="checkbox"
+                      checked={selectedIds.includes(el.id)}
+                      onChange={() => toggleSelection(el.id)}
+                    />
+                  )}
+                  <div className="txn-icon material-symbols-outlined ">
+                    {icons[el.category.toLowerCase()]
+                      ? icons[el.category.toLowerCase()]
+                      : el.title.charAt(0).toUpperCase()}
+                  </div>
+                  <div>
+                    <p className="txn-title">{el.title}</p>
+                    <span className="txn-sub">{el.category}</span>
+                  </div>
                 </div>
-              )}
-            </div>
-          ))}
+
+                <div className="txn-date">
+                  <p>{el.date}</p>
+                  <span>{el.time}</span>
+                </div>
+
+                <div className="txn-amount">${el.amount}</div>
+
+                <div
+                  className={`txn-status ${
+                    el.type === "income" ? "income" : "expense"
+                  }`}
+                >
+                  {el.type === "income" ? "Income" : "Expense"}
+                </div>
+
+                {userRole === "Admin" && (
+                  <div className="txn-action">
+                    <button
+                      className="delete-btn"
+                      onClick={() => handleDelete(el.id)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                )}
+              </div>
+            ))
+          ) : (
+            <EmptyState />
+          )}
         </>
       )}
     </div>

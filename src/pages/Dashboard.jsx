@@ -4,7 +4,13 @@ import InsightsBox from "../components/InsightBox";
 import Transactions from "../components/Transactions";
 import EmptyState from "../components/EmptyState";
 
-function Dashboard({ userRole, transactions, setTransactions }) {
+function Dashboard({
+  userRole,
+  transactions,
+  setTransactions,
+  showModal,
+  setShowModal,
+}) {
   const income = transactions
     .filter((el) => el.type === "income")
     .reduce((acc, curr) => acc + curr.amount, 0);
@@ -22,6 +28,7 @@ function Dashboard({ userRole, transactions, setTransactions }) {
           message="No data to display"
           subMessage="Add transactions from transactions page to see dashboard insights 📊 "
           showButton={userRole === "Admin"}
+          onAdd={() => setShowModal(true)}
         />
       </div>
     );
@@ -37,6 +44,8 @@ function Dashboard({ userRole, transactions, setTransactions }) {
           transactions={transactions}
           setTransactions={setTransactions}
           showless={5}
+          showModal={showModal}
+          setShowModal={setShowModal}
         />
       </div>
 

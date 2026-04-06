@@ -1,10 +1,13 @@
 import Sidebar from "./components/Sidebar";
 import Dashboard from "./pages/Dashboard";
 import TransactionsPage from "./pages/TransactionsPage";
+import AddTransactionModal from "./components/AddTransactionModal";
 import { useEffect, useState } from "react";
 import transactionsData from "./data/transactions";
 
 function App() {
+  const [showModal, setShowModal] = useState(false);
+
   const [activePage, setActivePage] = useState(() => {
     const savedPage = localStorage.getItem("activePage");
     return savedPage ? savedPage : "dashboard";
@@ -53,28 +56,38 @@ function App() {
             <div style={{ display: "flex", gap: "6px" }}>
               <h2>Welcome</h2>
               <h2>{userRole}</h2>
-              <select
-                onChange={(e) => setUserRole(e.target.value)}
-                style={{ marginLeft: "4px" }}
-              >
-                Role:
-                <option value="User">User</option>
-                <option value="Admin">Admin</option>
-              </select>
             </div>
             <p>Explore Finance</p>
           </div>
-          <div className="search">🔍</div>
+          <button
+            className="userRole"
+            style={{
+              alignSelf: "center",
+              cursor: "pointer",
+            }}
+            onClick={() => setUserRole(userRole === "Admin" ? "User" : "Admin")}
+          >
+            {userRole === "User" ? "Admin" : "User"}
+          </button>
           <button className="dark-mode" onClick={toggleDarkMode}>
             {isDark ? "☀️" : "🌙"}
           </button>
         </div>
+
+        {showModal && (
+          <AddTransactionModal
+            onClose={() => setShowModal(false)}
+            onAdd={(newTxn) => setTransactions([...transactions, newTxn])}
+          />
+        )}
 
         {activePage === "dashboard" && (
           <Dashboard
             userRole={userRole}
             transactions={transactions}
             setTransactions={setTransactions}
+            showModal={showModal}
+            setShowModal={setShowModal}
           />
         )}
         {activePage === "transactions" && (
@@ -82,6 +95,8 @@ function App() {
             userRole={userRole}
             transactions={transactions}
             setTransactions={setTransactions}
+            showModal={showModal}
+            setShowModal={setShowModal}
           />
         )}
       </div>

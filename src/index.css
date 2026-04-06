@@ -101,6 +101,7 @@
     background-color 0.3s ease,
     scale 0.2s ease;
   color: #0f172a;
+  cursor: pointer;
 }
 
 .menu-item.active {
@@ -149,10 +150,33 @@
 .username {
   margin-right: auto;
 }
-.dark-mode,
-.msg,
-.search {
-  flex-shrink: 0; /* Important: Prevents circles from becoming ovals */
+
+.userRole {
+  width: 80px;
+  height: 30px;
+  cursor: pointer;
+  align-self: center;
+  padding: 4px 12px;
+  margin-top: -6px;
+  border: none;
+  border-radius: 12px;
+  margin-right: -10px;
+  background: #3347fd;
+  color: white;
+  font-size: 16px;
+  transition:
+    background 0.3s ease-in-out,
+    color 0.3s ease-in-out;
+}
+
+.userRole:hover {
+  border: #3347fd 2px solid;
+  background: transparent;
+  color: black;
+}
+
+.dark-mode {
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -205,8 +229,8 @@
   transition: all ease-in-out 0.5s;
 }
 
-.income:hover,
-.expense:hover {
+.box.income:hover,
+.box.expense:hover {
   scale: 1.05;
   background: #0921fee4;
   color: white;
@@ -337,17 +361,6 @@
 
 .delete-btn:hover {
   background: #e60000;
-}
-
-.no-data {
-  text-align: center;
-  padding: 50px 20px;
-  color: gray;
-}
-
-.no-data h3 {
-  margin-bottom: 10px;
-  color: #333;
 }
 
 /* Transactions */
@@ -499,4 +512,30 @@
   justify-content: space-between;
   align-items: center;
   font-size: 14px;
+}
+input[name="search-bar"] {
+  width: 200px;
+  height: 26px;
+  padding: 8px;
+  margin-right: 4px;
+  border: 1px solid grey;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+input[name="search-bar"]:focus {
+  border: 1px solid black;
+}
+
+/* EMPTY STATE */
+
+.no-data {
+  text-align: center;
+  padding: 50px 20px;
+  color: grey;
+}
+
+.no-data h3 {
+  margin-bottom: 10px;
+  color: var(--text-main);
 }
