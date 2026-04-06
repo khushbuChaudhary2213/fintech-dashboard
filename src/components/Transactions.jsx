@@ -160,7 +160,7 @@ function Transactions({
                 Title ⬇⬆
               </button>
               <button
-                className=" sort-btn"
+                className="sort-btn-date sort-btn"
                 onClick={() => {
                   setSortBy("date");
                   setIsAsc(!isAsc);

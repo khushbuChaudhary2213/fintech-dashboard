@@ -546,10 +546,10 @@ input[name="search-bar"]:focus {
 
 .sort-control-group {
   display: grid;
-  grid-template-columns: 2fr 1.5fr 1fr 1fr;
+  grid-template-columns: 1.3fr 1fr 1fr 1fr;
   align-items: center;
   justify-content: center;
-  grid-row: 5;
+  grid-row: 6;
   grid-column: 1/-1;
   background-color: #eef1f7;
   padding: 8px;
