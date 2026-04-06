@@ -26,7 +26,7 @@ function Dashboard({
       >
         <EmptyState
           message="No data to display"
-          subMessage="Add transactions from transactions page to see dashboard insights 📊 "
+          subMessage="Add transactions to see dashboard insights 📊 "
           showButton={userRole === "Admin"}
           onAdd={() => setShowModal(true)}
         />
