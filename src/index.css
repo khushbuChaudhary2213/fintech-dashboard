@@ -546,11 +546,11 @@ input[name="search-bar"]:focus {
 
 th .sort-btn {
   font-size: 16px !important;
+  background: transparent;
 }
 
 .sort-control-group {
   display: grid;
-  grid-template-columns: 2fr 1.6fr 1.2fr 1.1fr 1fr;
   align-items: center;
   background-color: #eef1f7;
   padding: 12px 20px; /* Use horizontal padding instead of margins */
@@ -580,12 +580,6 @@ th .sort-btn {
 /* Center Date and Amount in their cells */
 .sort-btn-date {
   justify-self: centre;
-}
-
-.sort-btn:hover {
-  background-color: #b5c3f7;
-  color: black;
-  transform: translateY(-1px); /* Cleaner than 'scale' */
 }
 
 /* EMPTY STATE */

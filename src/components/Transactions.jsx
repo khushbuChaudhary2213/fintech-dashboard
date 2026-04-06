@@ -152,7 +152,7 @@ function Transactions({
           </div>
           <table className="transactions-table">
             <thead>
-              <tr className="sort-control-group">
+              <tr className={`sort-control-group ${userRole === "Admin" ? "admin-cols" : "user-cols"}`}>
                 <th className="txn-left">
                   <button
                     className="sort-btn sort-btn-title"
@@ -165,11 +165,10 @@ function Transactions({
                     <span class="material-symbols-outlined">
                       {sortBy === "alphabet"
                         ? isAsc
-                          ? "south"
-                          : "north"
-                        : "arrows_up_down_circle"}
+                          ? "north"
+                          : "south"
+                        : "swap_vert"}
                     </span>
-                    {/* {isAsc ? "⬇" : "⬆"} */}
                   </button>
                 </th>
                 <th className="txn-date">
@@ -182,11 +181,11 @@ function Transactions({
                   >
                     Date{" "}
                     <span class="material-symbols-outlined">
-                      {sortBy === "date"
+                      {sortBy === "date" // Change "alphabet" to "date" or "amount" for other columns
                         ? isAsc
-                          ? "south"
-                          : "north"
-                        : "arrows_up_down_circle"}
+                          ? "north"
+                          : "south"
+                        : "swap_vert"}
                     </span>
                   </button>
                 </th>
@@ -204,7 +203,7 @@ function Transactions({
                         ? isAsc
                           ? "south"
                           : "north"
-                        : "arrows_up_down_circle"}
+                        : "swap_vert"}
                     </span>
                   </button>
                 </th>
