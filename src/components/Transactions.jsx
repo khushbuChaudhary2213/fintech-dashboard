@@ -8,17 +8,13 @@ function Transactions({
   transactions,
   setTransactions,
   showless,
-  showModal,
   setShowModal,
 }) {
   const [sortBy, setSortBy] = useState("date");
   const [filter, setFilter] = useState("all");
   const [selectedIds, setSelectedIds] = useState([]);
   const [search, setSearch] = useState("");
-
-  function handleAdd(newtxn) {
-    setTransactions([...transactions, newtxn]);
-  }
+  const [isAsc, setIsAsc] = useState(true);
 
   function handleDelete(id) {
     setTransactions((prev) => prev.filter((t) => t.id !== id));
@@ -56,29 +52,29 @@ function Transactions({
   }
 
   const filteredTransactions = [...transactions].filter((el) => {
-    if (search != "") {
-      return (
-        el.title.toLowerCase().includes(search.toLowerCase()) ||
-        el.category.toLowerCase().includes(search.toLowerCase())
-      );
-    }
-    if (filter === "all") return transactions;
-    if (filter === "income") return el.type === "income";
-    if (filter === "expense") return el.type === "expense";
+    const matchSearch =
+      search === "" ||
+      el.title.toLowerCase().includes(search.toLowerCase()) ||
+      el.category.toLowerCase().includes(search.toLowerCase());
+
+    const matchFilter = filter === "all" || el.type === filter;
+
+    return matchSearch && matchFilter;
   });
 
   const sortedTransactions = [...filteredTransactions].sort((a, b) => {
-    if (sortBy === "date") {
-      const dateA = new Date(a.date);
-      const dateB = new Date(b.date);
-      return dateA - dateB;
-    }
+    let comparison = 0;
+
     if (sortBy === "alphabet") {
-      return a.title.localeCompare(b.title);
+      comparison = a.title.localeCompare(b.title);
+    } else if (sortBy === "date") {
+      comparison = new Date(a.date) - new Date(b.date);
+    } else if (sortBy === "amount") {
+      comparison = a.amount - b.amount;
     }
-    if (sortBy === "amount") {
-      return a.amount - b.amount;
-    }
+
+    // If isAsc is true, return comparison. If false, reverse it.
+    return isAsc ? comparison : -comparison;
   });
 
   let displayedTransactions = showless
@@ -87,12 +83,6 @@ function Transactions({
 
   return (
     <div className="transactions-page">
-      {/* {showModal && (
-        <AddTransactionModal
-          onClose={() => setShowModal(false)}
-          onAdd={handleAdd}
-        />
-      )} */}
       {transactions.length === 0 ? (
         <EmptyState
           message="No transactions to display"
@@ -104,6 +94,42 @@ function Transactions({
         <>
           <div className="transactions-header">
             <h3>Transactions</h3>
+            {userRole === "Admin" && (
+              <>
+                <button className="btn" onClick={() => setShowModal(true)}>
+                  Add Transaction
+                </button>
+                {selectedIds.length > 0 && (
+                  <>
+                    <div>
+                      <button
+                        style={{ cursor: "pointer" }}
+                        id="selectAllTransactions"
+                        onClick={(e) => handleSelectAll(e)}
+                      >
+                        {selectedIds.length === transactions.length
+                          ? "Deselect All"
+                          : "Select All"}
+                      </button>
+
+                      <button
+                        style={{ cursor: "pointer" }}
+                        onClick={
+                          selectedIds.length === transactions.length
+                            ? handleDeleteAll
+                            : handleDeleteSelected
+                        }
+                        id="deleteAllTransactions"
+                      >
+                        {selectedIds.length === transactions.length
+                          ? "Delete All"
+                          : "Delete"}
+                      </button>
+                    </div>
+                  </>
+                )}
+              </>
+            )}
             <input
               name="search-bar"
               type="text"
@@ -111,64 +137,47 @@ function Transactions({
               placeholder="Search By Title/Category"
               onChange={handleSearchChange}
             />
-            <div className="controls">
-              <div className="control-group">
-                <label>Filter:</label>
-                <select
-                  id="filterTransactions"
-                  onChange={(e) => setFilter(e.target.value)}
-                >
-                  <option value="all">All</option>
-                  <option value="income">Income</option>
-                  <option value="expense">Expense</option>
-                </select>
-              </div>
-              <div className="control-group"></div>
-              <label>Sort By:</label>
+            <div className="control-group">
+              <label>Filter:</label>
               <select
-                id="sortTransactions"
-                onChange={(e) => setSortBy(e.target.value)}
+                id="filterTransactions"
+                onChange={(e) => setFilter(e.target.value)}
               >
-                <option value="alphabet">Alphabet</option>
-                <option value="date">Date</option>
-                <option value="amount">Amount</option>
+                <option value="all">All</option>
+                <option value="income">Income</option>
+                <option value="expense">Expense</option>
               </select>
             </div>
-            {userRole === "Admin" && (
-              <>
-                {selectedIds.length > 0 && (
-                  <>
-                    <button
-                      style={{ cursor: "pointer" }}
-                      id="selectAllTransactions"
-                      onClick={(e) => handleSelectAll(e)}
-                    >
-                      {selectedIds.length === transactions.length
-                        ? "Deselect All"
-                        : "Select All"}
-                    </button>
 
-                    <button
-                      style={{ cursor: "pointer" }}
-                      onClick={
-                        selectedIds.length === transactions.length
-                          ? handleDeleteAll
-                          : handleDeleteSelected
-                      }
-                      id="deleteAllTransactions"
-                    >
-                      {selectedIds.length === transactions.length
-                        ? "Delete All"
-                        : "Delete"}
-                    </button>
-                  </>
-                )}
-
-                <button className="btn" onClick={() => setShowModal(true)}>
-                  Add Transaction
-                </button>
-              </>
-            )}
+            <div className="control-group sort-control-group">
+              <button
+                className="sort-btn sort-btn-title"
+                onClick={() => {
+                  setSortBy("alphabet");
+                  setIsAsc(!isAsc);
+                }}
+              >
+                Title ⬇⬆
+              </button>
+              <button
+                className=" sort-btn"
+                onClick={() => {
+                  setSortBy("date");
+                  setIsAsc(!isAsc);
+                }}
+              >
+                Date ⬇⬆
+              </button>
+              <button
+                className="sort-btn-amount sort-btn"
+                onClick={() => {
+                  setSortBy("amount");
+                  setIsAsc(!isAsc);
+                }}
+              >
+                Amount ⬇⬆
+              </button>
+            </div>
           </div>
 
           {displayedTransactions.length > 0 ? (

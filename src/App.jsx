@@ -67,7 +67,7 @@ function App() {
             }}
             onClick={() => setUserRole(userRole === "Admin" ? "User" : "Admin")}
           >
-            {userRole === "User" ? "Admin" : "User"}
+            {userRole === "User" ? "Switch to Admin" : "Switch to User"}
           </button>
           <button className="dark-mode" onClick={toggleDarkMode}>
             {isDark ? "☀️" : "🌙"}

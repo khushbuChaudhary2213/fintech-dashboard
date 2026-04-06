@@ -152,8 +152,6 @@
 }
 
 .userRole {
-  width: 80px;
-  height: 30px;
   cursor: pointer;
   align-self: center;
   padding: 4px 12px;
@@ -163,7 +161,7 @@
   margin-right: -10px;
   background: #3347fd;
   color: white;
-  font-size: 16px;
+  font-size: 14px;
   transition:
     background 0.3s ease-in-out,
     color 0.3s ease-in-out;
@@ -375,7 +373,10 @@
 }
 
 .transactions-header {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-row: 1fr 1fr 1fr 1fr;
+  gap: 10px;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
@@ -420,6 +421,8 @@
 }
 
 .btn {
+  width: fit-content;
+  justify-self: end;
   background-color: #2d5bff;
   color: white;
   padding: 8px;
@@ -507,15 +510,8 @@
   margin-right: 8px;
 }
 
-.controls {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 14px;
-}
 input[name="search-bar"] {
-  width: 200px;
-  height: 26px;
+  grid-column: 1/-1;
   padding: 8px;
   margin-right: 4px;
   border: 1px solid grey;
@@ -525,6 +521,43 @@ input[name="search-bar"] {
 
 input[name="search-bar"]:focus {
   border: 1px solid black;
+}
+
+.sort-btn {
+  width: fit-content;
+  padding: 6px 12px;
+  background: #6371f4;
+  border: none;
+  cursor: pointer;
+  border-radius: 12px;
+  color: white;
+}
+
+.sort-btn-title {
+  justify-self: flex-start;
+  margin-left: 4rem;
+}
+
+.sort-btn:hover {
+  scale: 1;
+  background-color: #b5c3f7;
+  color: black;
+}
+
+.sort-control-group {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 1fr 1fr;
+  align-items: center;
+  justify-content: center;
+  grid-row: 5;
+  grid-column: 1/-1;
+  background-color: #eef1f7;
+  padding: 8px;
+  border-radius: 12px;
+}
+
+.sort-btn-amount {
+  margin-left: -12px;
 }
 
 /* EMPTY STATE */
