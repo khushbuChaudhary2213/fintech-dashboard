@@ -81,6 +81,8 @@ function Transactions({
     ? sortedTransactions.slice(0, 5)
     : sortedTransactions;
 
+  // ... (rest of your imports and logic stay the same)
+
   return (
     <div className="transactions-page">
       {transactions.length === 0 ? (
@@ -130,6 +132,7 @@ function Transactions({
                 )}
               </>
             )}
+
             <input
               name="search-bar"
               type="text"
@@ -148,98 +151,110 @@ function Transactions({
                 <option value="expense">Expense</option>
               </select>
             </div>
-
-            <div className="control-group sort-control-group">
-              <button
-                className="sort-btn sort-btn-title"
-                onClick={() => {
-                  setSortBy("alphabet");
-                  setIsAsc(!isAsc);
-                }}
-              >
-                Title ⬇⬆
-              </button>
-              <button
-                className="sort-btn-date sort-btn"
-                onClick={() => {
-                  setSortBy("date");
-                  setIsAsc(!isAsc);
-                }}
-              >
-                Date ⬇⬆
-              </button>
-              <button
-                className="sort-btn-amount sort-btn"
-                onClick={() => {
-                  setSortBy("amount");
-                  setIsAsc(!isAsc);
-                }}
-              >
-                Amount ⬇⬆
-              </button>
-            </div>
           </div>
-
-          {displayedTransactions.length > 0 ? (
-            displayedTransactions.map((el) => (
-              <div
-                className={`txn-row ${userRole === "User" ? "user-cols" : "admin-cols"}`}
-                key={el.id}
-              >
-                <div className="txn-left">
-                  {userRole === "Admin" && (
-                    <input
-                      style={{
-                        cursor: "pointer",
-                        width: "16px",
-                        height: "16px",
-                      }}
-                      type="checkbox"
-                      checked={selectedIds.includes(el.id)}
-                      onChange={() => toggleSelection(el.id)}
-                    />
-                  )}
-                  <div className="txn-icon material-symbols-outlined ">
-                    {icons[el.category.toLowerCase()]
-                      ? icons[el.category.toLowerCase()]
-                      : el.title.charAt(0).toUpperCase()}
-                  </div>
-                  <div>
-                    <p className="txn-title">{el.title}</p>
-                    <span className="txn-sub">{el.category}</span>
-                  </div>
-                </div>
-
-                <div className="txn-date">
-                  <p>{el.date}</p>
-                  <span>{el.time}</span>
-                </div>
-
-                <div className="txn-amount">${el.amount}</div>
-
-                <div
-                  className={`txn-status ${
-                    el.type === "income" ? "income" : "expense"
-                  }`}
-                >
-                  {el.type === "income" ? "Income" : "Expense"}
-                </div>
-
-                {userRole === "Admin" && (
-                  <div className="txn-action">
-                    <button
-                      className="delete-btn"
-                      onClick={() => handleDelete(el.id)}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                )}
-              </div>
-            ))
-          ) : (
-            <EmptyState />
-          )}
+          <table className="transactions-table">
+            <thead>
+              <tr className="sort-control-group">
+                <th className="txn-left">
+                  <button
+                    className="sort-btn sort-btn-title"
+                    onClick={() => {
+                      setSortBy("alphabet");
+                      setIsAsc(!isAsc);
+                    }}
+                  >
+                    Title {isAsc ? "⬇" : "⬆"}
+                  </button>
+                </th>
+                <th className="txn-date">
+                  <button
+                    className="sort-btn-date sort-btn"
+                    onClick={() => {
+                      setSortBy("date");
+                      setIsAsc(!isAsc);
+                    }}
+                  >
+                    Date {isAsc ? "⬇" : "⬆"}
+                  </button>
+                </th>
+                <th className="txn-amount">
+                  <button
+                    className="sort-btn-amount sort-btn"
+                    onClick={() => {
+                      setSortBy("amount");
+                      setIsAsc(!isAsc);
+                    }}
+                  >
+                    Amount {isAsc ? "⬇" : "⬆"}
+                  </button>
+                </th>
+                <th className="txn-status">Status</th>
+                {userRole === "Admin" && <th className="txn-action">Action</th>}
+              </tr>
+            </thead>
+            <tbody>
+              {displayedTransactions.length > 0 ? (
+                displayedTransactions.map((el) => (
+                  <tr
+                    className={`txn-row ${userRole === "User" ? "user-cols" : "admin-cols"}`}
+                    key={el.id}
+                  >
+                    <td className="txn-left">
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "10px",
+                        }}
+                      >
+                        {userRole === "Admin" && (
+                          <input
+                            type="checkbox"
+                            checked={selectedIds.includes(el.id)}
+                            onChange={() => toggleSelection(el.id)}
+                          />
+                        )}
+                        <div className="txn-icon material-symbols-outlined ">
+                          {icons[el.category.toLowerCase()] ||
+                            el.title.charAt(0).toUpperCase()}
+                        </div>
+                        <div>
+                          <p className="txn-title">{el.title}</p>
+                          <span className="txn-sub">{el.category}</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="txn-date">
+                      <p>{el.date}</p>
+                      <span>{el.time}</span>
+                    </td>
+                    <td className="txn-amount">${el.amount}</td>
+                    <td className="txn-status">
+                      <div className={`status-pill ${el.type}`}>
+                        {el.type.charAt(0).toUpperCase() + el.type.slice(1)}
+                      </div>
+                    </td>
+                    {userRole === "Admin" && (
+                      <td className="txn-action">
+                        <button
+                          className="delete-btn"
+                          onClick={() => handleDelete(el.id)}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    )}
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={userRole === "Admin" ? 5 : 4}>
+                    <EmptyState message="No matching transactions found" />
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
         </>
       )}
     </div>
