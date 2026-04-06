@@ -77,11 +77,9 @@ function Transactions({
     return isAsc ? comparison : -comparison;
   });
 
-  let displayedTransactions = showless
+  const displayedTransactions = showless
     ? sortedTransactions.slice(0, 5)
     : sortedTransactions;
-
-  // ... (rest of your imports and logic stay the same)
 
   return (
     <div className="transactions-page">
@@ -160,10 +158,18 @@ function Transactions({
                     className="sort-btn sort-btn-title"
                     onClick={() => {
                       setSortBy("alphabet");
-                      setIsAsc(!isAsc);
+                      setIsAsc(sortBy === "alphabet" ? !isAsc : true);
                     }}
                   >
-                    Title {isAsc ? "⬇" : "⬆"}
+                    Title{" "}
+                    <span class="material-symbols-outlined">
+                      {sortBy === "alphabet"
+                        ? isAsc
+                          ? "south"
+                          : "north"
+                        : "arrows_up_down_circle"}
+                    </span>
+                    {/* {isAsc ? "⬇" : "⬆"} */}
                   </button>
                 </th>
                 <th className="txn-date">
@@ -171,10 +177,17 @@ function Transactions({
                     className="sort-btn-date sort-btn"
                     onClick={() => {
                       setSortBy("date");
-                      setIsAsc(!isAsc);
+                      setIsAsc(sortBy === "date" ? !isAsc : true);
                     }}
                   >
-                    Date {isAsc ? "⬇" : "⬆"}
+                    Date{" "}
+                    <span class="material-symbols-outlined">
+                      {sortBy === "date"
+                        ? isAsc
+                          ? "south"
+                          : "north"
+                        : "arrows_up_down_circle"}
+                    </span>
                   </button>
                 </th>
                 <th className="txn-amount">
@@ -182,10 +195,17 @@ function Transactions({
                     className="sort-btn-amount sort-btn"
                     onClick={() => {
                       setSortBy("amount");
-                      setIsAsc(!isAsc);
+                      setIsAsc(sortBy === "amount" ? !isAsc : true);
                     }}
                   >
-                    Amount {isAsc ? "⬇" : "⬆"}
+                    Amount{" "}
+                    <span class="material-symbols-outlined">
+                      {sortBy === "amount"
+                        ? isAsc
+                          ? "south"
+                          : "north"
+                        : "arrows_up_down_circle"}
+                    </span>
                   </button>
                 </th>
                 <th className="txn-status">Status</th>

@@ -103,20 +103,9 @@
     grid-template-rows: 1fr 1fr;
     gap: 10px;
   }
-  .sort-btn-title {
-    margin-left: 28px;
-  }
-  .sort-btn-amount {
-    margin-left: 0;
-    grid-column: 3/-1;
-  }
 }
 
 @media (max-width: 450px) {
-  .sort-btn-title {
-    margin-left: 18px;
-  }
-
   .sort-control-group {
     grid-template-columns: 1fr 1fr 1fr;
   }
@@ -169,7 +158,7 @@
   }
 
   .sort-btn-title {
-    margin-left: 20px;
+    /* margin-left: 20px; */
   }
 }
 

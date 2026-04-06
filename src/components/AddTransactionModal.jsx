@@ -2,27 +2,32 @@ import { useState } from "react";
 import icons from "../utils/iconsTransaction";
 
 const AddTransactionModal = ({ onClose, onAdd }) => {
+  // 1. Move today calculation outside or keep inside, but ensure state uses it
+  const today = new Date().toISOString().split("T")[0];
+
   const [form, setForm] = useState({
     title: "",
     amount: "",
     type: "expense",
     category: "",
-    date: "",
+    date: today, // Initialized correctly
   });
   const [error, setError] = useState("");
   const [isOther, setIsOther] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    if (name == "amount") {
-      if (value != "" && parseFloat(value) < 0) {
+
+    if (name === "amount") {
+      if (value !== "" && parseFloat(value) < 0) {
         setError("Amount should be positive.");
-        return;
       } else {
         setError("");
       }
     }
-    setForm({ ...form, [name]: value });
+
+    // Use functional update to ensure we don't lose other fields (like date)
+    setForm((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleCategoryChange = (e) => {
@@ -30,41 +35,41 @@ const AddTransactionModal = ({ onClose, onAdd }) => {
 
     if (value === "other") {
       setIsOther(true);
-      setForm({ ...form, category: "" });
+      setForm((prev) => ({ ...prev, category: "" }));
     } else {
       setIsOther(false);
-      handleChange(e);
+      // Manually update the category in state
+      setForm((prev) => ({ ...prev, category: value }));
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (error) {
+    if (error || !form.category || !form.date) {
+      if (!form.category) alert("Please select a category");
       return;
     }
 
+    // Create the final object
     const newTransaction = {
       ...form,
       id: Date.now(),
       amount: Number(form.amount),
+      // Ensure date is definitely there
+      date: form.date || today,
     };
 
-    setError("");
     onAdd(newTransaction);
     onClose();
   };
-
-  const today = new Date().toISOString().split("T")[0];
 
   return (
     <div className="modal-overlay">
       <div className="modal">
         <h3>Add Transaction</h3>
         {error && (
-          <span style={{ color: "red", display: "block", fontSize: "12px" }}>
-            {error}
-          </span>
+          <span style={{ color: "red", fontSize: "12px" }}>{error}</span>
         )}
 
         <form onSubmit={handleSubmit}>
@@ -72,6 +77,7 @@ const AddTransactionModal = ({ onClose, onAdd }) => {
             type="text"
             name="title"
             placeholder="Title"
+            value={form.title}
             onChange={handleChange}
             required
           />
@@ -80,11 +86,12 @@ const AddTransactionModal = ({ onClose, onAdd }) => {
             type="number"
             name="amount"
             placeholder="Amount"
+            value={form.amount}
             onChange={handleChange}
             required
           />
 
-          <select name="type" onChange={handleChange}>
+          <select name="type" value={form.type} onChange={handleChange}>
             <option value="expense">Expense</option>
             <option value="income">Income</option>
           </select>
@@ -93,26 +100,24 @@ const AddTransactionModal = ({ onClose, onAdd }) => {
             name="category"
             onChange={handleCategoryChange}
             required
-            defaultValue=""
+            value={isOther ? "other" : form.category}
           >
             <option value="" disabled>
               Select Category
             </option>
-
             {Object.keys(icons).map((key) => (
               <option key={key} value={key}>
                 {key.charAt(0).toUpperCase() + key.slice(1)}
               </option>
             ))}
-
-            <option value="other">Other (Type your own)</option>
+            <option value="other">Other</option>
           </select>
 
           {isOther && (
             <input
               type="text"
               name="category"
-              placeholder="Enter Custom Category"
+              placeholder="Enter Category"
               onChange={handleChange}
               required
               autoFocus
@@ -122,7 +127,7 @@ const AddTransactionModal = ({ onClose, onAdd }) => {
           <input
             type="date"
             name="date"
-            defaultValue={today}
+            value={form.date}
             onChange={handleChange}
             required
           />

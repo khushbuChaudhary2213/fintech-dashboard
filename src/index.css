@@ -302,6 +302,10 @@
   z-index: 1000;
 }
 
+.modal h3 {
+  color: var(--bg-content);
+}
+
 /* Modal box */
 .modal {
   background: #fff;
@@ -486,11 +490,10 @@ th.txn-amount {
 .txn-date p {
   font-weight: 500;
 }
-
+/* 
 .txn-date span {
-  font-size: 12px;
   color: gray;
-}
+} */
 
 .txn-amount {
   font-weight: 600;
@@ -541,10 +544,13 @@ input[name="search-bar"]:focus {
   border: 1px solid black;
 }
 
+th .sort-btn {
+  font-size: 16px !important;
+}
+
 .sort-control-group {
   display: grid;
-  /* Match the column structure of your txn-row exactly */
-  grid-template-columns: 2fr 1.5fr 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1.6fr 1.2fr 1.1fr 1fr;
   align-items: center;
   background-color: #eef1f7;
   padding: 12px 20px; /* Use horizontal padding instead of margins */
@@ -555,13 +561,15 @@ input[name="search-bar"]:focus {
 .sort-btn {
   width: fit-content;
   padding: 6px 12px;
-  background: #6371f4;
   border: none;
   cursor: pointer;
   border-radius: 12px;
-  color: white;
-  font-weight: 500;
+  font-weight: bold;
   transition: all 0.2s ease;
+}
+
+.sort-btn span {
+  font-size: 16px;
 }
 
 /* Align Title to the left of its cell */
@@ -572,13 +580,6 @@ input[name="search-bar"]:focus {
 /* Center Date and Amount in their cells */
 .sort-btn-date {
   justify-self: centre;
-}
-
-/* Keep the labels 'Status' and 'Action' aligned with the buttons */
-.txn-status-header {
-  justify-self: center;
-  font-weight: bold;
-  font-size: 0.9rem;
 }
 
 .sort-btn:hover {
